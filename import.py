@@ -10,9 +10,13 @@ db = scoped_session(sessionmaker(bind=engine))
 def main():
     f = open("books.csv")
     reader = csv.reader(f)
+    cnt = 0
+
     for isbn, title, author, year in reader:
-        db.execute("INSERT INTO books (isbn, title, author, year) VALUES (:isbn, :title, :author, :year)",
-                    {"isbn": isbn, "title": title, "author": author, "year": int(year)})
+        cnt += 1
+        db.execute("INSERT INTO books (id, isbn, title, author, year) VALUES (:id, :isbn, :title, :author, :year)",
+                    {"id": cnt, "isbn": isbn, "title": title, "author": author, "year": int(year)})
+
     db.commit()
 
 if __name__ == "__main__":
