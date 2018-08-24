@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block title %}
+    Search
+{% endblock %}
+{% block body %}
+    <form action="{{ url_for('search') }}">
+        <center><h1>Search</h1></center>
+        <div class="form-group container">
+            <div class="input-group mb-3 container">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="isbn">Search By...</span>
+                </div>
+                <select class="form-control" name="ways">
+                    <option selected>Choose...</option>
+                    <option value="isbn">ISBN</option>
+                    <option value="title">title</option>
+                    <option value="author">author</option>
+                </select>
+            </div>
+            <div class="input-group mb-3 container">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="isbn">ISBN</span>
+                </div>
+                <input type="text" class="form-control" placeholder="ISBN number" aria-describedby="isbn">
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary float-right">Search</button>
+            </div>
+        </div>
+{% endblock %}

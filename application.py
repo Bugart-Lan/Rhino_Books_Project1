@@ -1,10 +1,10 @@
 import os
-import "import.py"
 
-from flask import Flask, session
+from flask import Flask, session, render_template, redirect, request, jsonify
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from models import *
 
 app = Flask(__name__)
 
@@ -22,6 +22,18 @@ engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
 
+
 @app.route("/")
 def index():
-    return "Project 1: TODO"
+    return render_template("login.html")
+
+@app.route("/verify", methods=["POST"])
+def verify():
+    username = request.form.get("username")
+    password = request.form.get("password")
+    account = accounts.query.filter_by(username=username, password=password).first()
+    return render_template("search.html")
+
+@app.route("/search")
+def search():
+    return render_template("search.html")
