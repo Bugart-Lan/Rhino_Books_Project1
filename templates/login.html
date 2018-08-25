@@ -14,11 +14,16 @@
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" placeholder="Enter Password" name="password">
             </div>
+            {% if wrong %}
+            <div class="alert alert-danger" role="alert">
+                Wrong username or password! Please try again!
+            </div>
+            {% endif %}
             <button type="submit" class="btn btn-primary float-right">Submit</button>
         </div>
     </form>
     <div class="container">
-        <a href="#" class="btn btn-primary active" role="button">Create new account</a>
+        <a href="{{ url_for('register') }}" class="btn btn-primary active" role="button">Create new account</a>
     </div>
 
 {% endblock %}

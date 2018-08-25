@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block title %}
+    Results
+{% endblock %}
+{% block body %}
+    <center>
+        <h1>Results</h1>
+        <div class="container">
+            {% if find %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">ISBN</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Author</th>
+                            <th scope="col">Year</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for book in books %}
+                            <tr>
+                                <th scope="row">book[0]</th>
+                                <td>book[1]</td>
+                                <td>book[2]</td>
+                                <td>book[3]</td>
+                                <td>book[4]</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+            {% endif %}
+        </div>
+{% endblock %}

@@ -15,16 +15,20 @@
                     <option value="isbn">ISBN</option>
                     <option value="title">title</option>
                     <option value="author">author</option>
+                    <option value="year">year</option>
                 </select>
             </div>
             <div class="input-group mb-3 container">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="isbn">ISBN</span>
+                    <span class="input-group-text">
+                        <img src="/static/magnifying-glass.png" height=30px>
+                    </span>
                 </div>
-                <input type="text" class="form-control" placeholder="ISBN number" aria-describedby="isbn">
+                <input type="text" class="form-control" placeholder="Please enter key words..." name="key">
             </div>
             <div>
                 <button type="submit" class="btn btn-primary float-right">Search</button>
             </div>
         </div>
+    </form>
 {% endblock %}
