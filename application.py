@@ -27,7 +27,15 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
+    if 'username' in session:
+        return redirect(f"/user/{session['username']}")
     return render_template("login.html", wrong = False)
+
+@app.route("/login_fail")
+def login_fail():
+    """Login failure."""
+    #Page with alert message.
+    return render_template("login.html", wrong = True)
 
 @app.route("/register")
 def register():
@@ -49,17 +57,25 @@ def verify():
     password = request.form.get("password")
     account = Account.query.filter_by(username=username, password=password).first()
     if not account:
-        return render_template("login.html", wrong = True)
-    return render_template("search.html")
+        return redirect("/login_fail")
+    session['username'] = username
+    return redirect(f"/user/{username}")
+
+@app.route("/user/<username>")
+def user(username):
+    found = True
+    if 'found404Fail' in username:
+        found = False
+    return render_template("search.html", found = found)
 
 @app.route("/search")
 def search():
-    way = request.form.get("ways")
-    key = request.form.get("key")
-    way = 'title'
-    #problem
-    books = Book.query.filter(getattr(Book, way).like(f"%{key}%")).all()
-    find = True
-    if not book:
-        find = False
-    return render_template("results.html", find = find, books = books)
+    way = request.args.get("ways")
+    keyword = request.args.get("keyword")
+    if way != "Choose..." and keyword:
+        books = Books.query.filter(getattr(Books, way).like(f"%{keyword}%")).order_by(Books.id).all()
+    else:
+        books = False
+    if not books:
+        return redirect(f"/user/{session['username']}_found404Fail")
+    return render_template("results.html", books = books)

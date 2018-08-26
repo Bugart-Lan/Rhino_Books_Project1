@@ -6,30 +6,27 @@
     <center>
         <h1>Results</h1>
         <div class="container">
-            {% if find %}
-                <table class="table">
-                    <thead>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">ISBN</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Year</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">ISBN</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Author</th>
-                            <th scope="col">Year</th>
+                            <th scope="row">{{ book.id }}</th>
+                            <td>{{ book.isbn }}</td>
+                            <td>{{ book.title }}</td>
+                            <td>{{ book.author }}</td>
+                            <td>{{ book.year }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {% for book in books %}
-                            <tr>
-                                <th scope="row">book[0]</th>
-                                <td>book[1]</td>
-                                <td>book[2]</td>
-                                <td>book[3]</td>
-                                <td>book[4]</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% else %}
-            {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
 {% endblock %}

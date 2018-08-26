@@ -14,7 +14,7 @@ class Account(db.Model):
             db.session.add(self)
             db.session.commit()
 
-class Book(db.Model):
+class Books(db.Model):
     __tablename = "books"
     id = db.Column(db.Integer, primary_key = True)
     isbn = db.Column(db.String, nullable = False)

@@ -24,8 +24,13 @@
                         <img src="/static/magnifying-glass.png" height=30px>
                     </span>
                 </div>
-                <input type="text" class="form-control" placeholder="Please enter key words..." name="key">
+                <input type="text" class="form-control" placeholder="Please enter keywords..." name="keyword">
             </div>
+            {% if not found %}
+            <div class="alert alert-danger container" role="alert">
+                Not found! Please select a type and try again!
+            </div>
+            {% endif %}
             <div>
                 <button type="submit" class="btn btn-primary float-right">Search</button>
             </div>
