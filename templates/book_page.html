@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block title %}
+    {{ book.title }}
+{% endblock %}
+{% block body %}
+    <center>
+        <h1>{{ book.title }}</h1>
+        <div class="row container">
+            <div class="col-sm-4">
+                <div class="card">
+                    <ul class="list-group">
+                        <li class="list-group-item">Title</li>
+                        <li class="list-group-item">Author</li>
+                        <li class="list-group-item">Publication year</li>
+                        <li class="list-group-item">ISBN number</li>
+                        <li class="list-group-item">Reviews</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="card">
+                    <ul class="list-group">
+                        <li class="list-group-item">{{ book.title }}</li>
+                        <li class="list-group-item">{{ book.author }}</li>
+                        <li class="list-group-item">{{ book.year }}</li>
+                        <li class="list-group-item">{{ book.isbn }}</li>
+                        <li class="list-group-item">{{ count }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </center>
+        <div class="container">
+            <center><h1>Comments</h1></center>
+            {% for review in reviews %}
+                {% if review.comment != NULL %}
+                    <div class="card" style="margin-top:30px; margin-bottom: 10px;">
+                        <div class="card-header">
+                            Reviewer: {{ review.username }}
+                            {% for i in range(review.rating) %}
+                                <img src="/static/star.png" style="float:right" height=20px;>
+                            {% endfor %}
+                        </div>
+                        <div clsas="card-body">
+                            <p class="card-text">{{ review.comment }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            {% if rate %}
+            <form action="{{ url_for('add_comment', book_id = book.id) }}" method="post">
+                <div class="card" style="margin-top:30px; margin-bottom: 10px;">
+                    <div class="card-header">
+                        Add your comment
+                        <select class="form-control" style="float:right; width:100px" name="rating">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <span style="float:right; margin-right:10px">Rate the book: </span>
+                    </div>
+                    <div clsas="form-group card-body">
+                        <textarea class="form-control" rows="8" name="comment"> Write your comment here...</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+{% endblock %}

@@ -15,9 +15,17 @@ class Account(db.Model):
             db.session.commit()
 
 class Books(db.Model):
-    __tablename = "books"
+    __tablename__ = "books"
     id = db.Column(db.Integer, primary_key = True)
     isbn = db.Column(db.String, nullable = False)
     title = db.Column(db.String, nullable = False)
     author = db.Column(db.String, nullable = False)
     year = db.Column(db.Integer, nullable = False)
+
+class Review(db.Model):
+    __tablename__ = "review"
+    id = db.Column(db.Integer, primary_key = True)
+    rating = db.Column(db.Integer, nullable = False)
+    comment = db.Column(db.Text, nullable = True)
+    user_id = db.Column(db.Integer, nullable = False)
+    book_id = db.Column(db.Integer, nullable = False)
