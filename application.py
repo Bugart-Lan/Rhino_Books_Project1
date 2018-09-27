@@ -5,6 +5,7 @@ from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from models import *
+from goodreads import *
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -41,7 +42,7 @@ def login_fail():
 
 @app.route("/register")
 def register():
-    return render_template("registration.html")
+    return render_template("registration.html", wrong = False)
 
 @app.route("/create", methods=["POST"])
 def create():
@@ -49,6 +50,9 @@ def create():
     #Get form information.
     username = request.form.get("username")
     password = request.form.get("password")
+    tmp = Account.query.filter_by(username=username).first()
+    if tmp:
+        return render_template("registration.html", wrong = True)
     account = Account(username = username, password = password)
     account.add()
     return redirect("/")
@@ -104,8 +108,9 @@ def book_page(id):
             rate = False
             break
     book = Books.query.filter_by(id=id).first()
-    return render_template("book_page.html", book = book, rate = rate, reviews = reviews, count = count)
+    ratings = get_ratings(book.isbn)
+    return render_template("book_page.html", book = book, rate = rate, reviews = reviews, count = count, ratings = ratings)
 
 @app.route("/add_comment/<book_id>", methods=["POST"])
 def add_comment(book_id):
-    return
+    return 
