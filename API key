@@ -1,6 +1,6 @@
 key: rX3vKLsj4JzA9Us9JAMHIA
 secret: ozXHnNy3u8Rt5avGLcn6P9bfLK53AryoGvL9AzeEw
-URI: postgres://hcypcbarqijsux:4dd08a291cf486f85e55a47c100ec3af9d09fa32a08950fdd319c4228bb6f766@ec2-107-21-98-165.compute-1.amazonaws.com:5432/df0f6th42t5840
+URL: postgres://hcypcbarqijsux:4dd08a291cf486f85e55a47c100ec3af9d09fa32a08950fdd319c4228bb6f766@ec2-107-21-98-165.compute-1.amazonaws.com:5432/df0f6th42t5840
 
 for isbn, title, author, year in reader:
     db.execute("INSERT INTO books (isbn, title, author, year) VALUES (:isbn, :title, :author, :year)",

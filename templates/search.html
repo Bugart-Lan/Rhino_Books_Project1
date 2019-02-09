@@ -40,7 +40,7 @@
         <img src="/static/user.png" height="70px">
         <h1>{{ username }}</h1>
         <div class="list-group container" id="account">
-            <a href="#" class="list-group-item list-group-item-action">Modify account</a>
+            <a href="{{ url_for('modify_account') }}" class="list-group-item list-group-item-action">Modify account</a>
             <a href="{{ url_for('logout') }}" class="list-group-item list-group-item-action">Sign out</a>
         </div>
     </center>

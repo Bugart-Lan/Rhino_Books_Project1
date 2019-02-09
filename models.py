@@ -11,8 +11,11 @@ class Account(db.Model):
     username = db.Column(db.String, nullable = False, unique = True)
     password = db.Column(db.String, nullable = False)
     def add(self):
-            db.session.add(self)
-            db.session.commit()
+        db.session.add(self)
+        db.session.commit()
+    def update_password(self, new_password):
+        self.password = new_password
+        db.session.commit()
 
 class Books(db.Model):
     __tablename__ = "books"
@@ -29,3 +32,6 @@ class Review(db.Model):
     comment = db.Column(db.Text, nullable = True)
     user_id = db.Column(db.Integer, nullable = False)
     book_id = db.Column(db.Integer, nullable = False)
+    def add(self):
+        db.session.add(self)
+        db.session.commit()

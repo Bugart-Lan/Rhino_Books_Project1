@@ -2,12 +2,15 @@ import os
 
 from flask import Flask, session, render_template, redirect, request, jsonify, url_for
 from flask_session import Session
+from flask_dotenv import DotEnv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from models import *
 from goodreads import *
 
 app = Flask(__name__)
+env = DotEnv(app)
+env.init_app(app)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -81,7 +84,7 @@ def user():
 def search():
     way = request.args.get("ways")
     keyword = request.args.get("keyword")
-    if way != "Choose..." and keyword:
+    if way and keyword:
         books = Books.query.filter(getattr(Books, way).like(f"%{keyword}%")).order_by(Books.id).all()
     else:
         books = False
@@ -113,4 +116,36 @@ def book_page(id):
 
 @app.route("/add_comment/<book_id>", methods=["POST"])
 def add_comment(book_id):
-    return 
+    comment = request.form.get("comment")
+    rating = request.form.get("rating")
+    review = Review(rating = rating, comment = comment, user_id = session['id'], book_id = book_id)
+    review.add()
+    return book_page(book_id)
+
+@app.route("/modify_account")
+def modify_account():
+    return render_template("modify.html", wrong = False)
+
+@app.route("/change_password", methods=["POST"])
+def change_password():
+    username = request.form.get("username")
+    old_password = request.form.get("old_password")
+    new_password = request.form.get("new_password")
+    account = Account.query.filter_by(username=username, password=old_password).first()
+    if not account:
+        return render_template("modify.html", wrong = True)
+    account.update_password(new_password)
+    return logout()
+
+@app.route("/api/<isbn>")
+def api(isbn):
+    book = Books.query.filter_by(isbn=isbn).first()
+    ratings = get_ratings(isbn)
+    return jsonify({
+    "title": book.title,
+    "author": book.author,
+    "year": book.year,
+    "isbn": isbn,
+    "review_count": ratings['ratings_cnt'],
+    "average_score": ratings['av_rating']
+    })
