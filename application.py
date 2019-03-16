@@ -84,8 +84,10 @@ def user():
 def search():
     way = request.args.get("ways")
     keyword = request.args.get("keyword")
-    if way and keyword:
+    if way and way != "year" and keyword:
         books = Books.query.filter(getattr(Books, way).like(f"%{keyword}%")).order_by(Books.id).all()
+    elif way == "year" and isInt(keyword):
+        books = Books.query.filter_by(year = keyword)
     else:
         books = False
     if not books:
