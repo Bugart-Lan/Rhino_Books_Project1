@@ -37,13 +37,10 @@
         <div class="container">
             <center><h1>Comments</h1></center>
             {% for review in reviews %}
-                {% if review.comment != NULL %}
+                {% if review.comment != NULL and review.username != user %}
                     <div class="card" style="margin-top:30px; margin-bottom: 10px;">
                         <div class="card-header">
                             Reviewer: {{ review.username }}
-                            {% if review.username == user %}
-                            <a href="/edit_page/{{ review.id }}"><img src="/static/edit.png" style="margin-left: 10px" height=20px;></a>
-                            {% endif %}
                             {% for i in range(review.rating) %}
                                 <img src="/static/star.png" style="float:right" height=20px;>
                             {% endfor %}
@@ -54,11 +51,10 @@
                     </div>
                 {% endif %}
             {% endfor %}
-            {% if rate %}
-            <form action="{{ url_for('add_comment', book_id = book.id) }}" method="post">
+            <form action="{{ url_for('edit', review_id = my_review.id) }}" method="post">
                 <div class="card" style="margin-top:30px; margin-bottom: 10px;">
                     <div class="card-header">
-                        Add your comment
+                        Edit your comment
                         <select class="form-control" style="float:right; width:100px" name="rating">
                             <option value="0">0</option>
                             <option value="1">1</option>
@@ -70,11 +66,10 @@
                         <span style="float:right; margin-right:10px">Rate the book: </span>
                     </div>
                     <div clsas="form-group card-body">
-                        <textarea class="form-control" rows="8" name="comment" placeholder="Write your comment here..."></textarea>
+                        <textarea class="form-control" rows="8" name="new_comment">{{ my_review.comment }}</textarea>
                     </div>
                     <button type="submit" class="btn btn-success">Submit</button>
                 </div>
             </form>
-            {% endif %}
         </div>
 {% endblock %}

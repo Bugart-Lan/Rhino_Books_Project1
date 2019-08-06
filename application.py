@@ -103,7 +103,7 @@ def logout():
 
 @app.route("/book_page/<id>")
 def book_page(id):
-    reviews = db.execute(f"SELECT rating, comment, username FROM review\
+    reviews = db.execute(f"SELECT rating, comment, username, review.id FROM review\
                         JOIN accounts ON review.user_id = accounts.id\
                         WHERE review.book_id = {id};").fetchall()
     count = len(reviews)
@@ -114,7 +114,7 @@ def book_page(id):
             break
     book = Books.query.filter_by(id=id).first()
     ratings = get_ratings(book.isbn)
-    return render_template("book_page.html", book = book, rate = rate, reviews = reviews, count = count, ratings = ratings)
+    return render_template("book_page.html", book = book, rate = rate, reviews = reviews, count = count, ratings = ratings, user = session['username'])
 
 @app.route("/add_comment/<book_id>", methods=["POST"])
 def add_comment(book_id):
@@ -122,7 +122,23 @@ def add_comment(book_id):
     rating = request.form.get("rating")
     review = Review(rating = rating, comment = comment, user_id = session['id'], book_id = book_id)
     review.add()
-    return book_page(book_id)
+    return redirect(f"/book_page/{book_id}")
+
+@app.route("/edit_page/<review_id>")
+def edit_page(review_id):
+    my_review = Review.query.filter_by(id=review_id).first()
+    reviews = db.execute(f"SELECT rating, comment, username FROM review\
+                        JOIN accounts ON review.user_id = accounts.id\
+                        WHERE review.book_id = {my_review.book_id};").fetchall()
+    book = Books.query.filter_by(id=my_review.book_id).first()
+    return render_template("edit.html", book = book, reviews = reviews, count = len(reviews), ratings = get_ratings(book.isbn), user = session['username'], my_review = my_review)
+
+@app.route("/edit/<review_id>", methods=["POST"])
+def edit(review_id):
+    new_comment = request.form.get("new_comment")
+    review = Review.query.get(review_id)
+    review.edit_comment(new_comment)
+    return redirect(f"/book_page/{review.book_id}")
 
 @app.route("/modify_account")
 def modify_account():
