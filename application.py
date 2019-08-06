@@ -119,6 +119,7 @@ def book_page(id):
 @app.route("/add_comment/<book_id>", methods=["POST"])
 def add_comment(book_id):
     comment = request.form.get("comment")
+    comment = comment.replace('\n', '<br>')
     rating = request.form.get("rating")
     review = Review(rating = rating, comment = comment, user_id = session['id'], book_id = book_id)
     review.add()
@@ -136,8 +137,10 @@ def edit_page(review_id):
 @app.route("/edit/<review_id>", methods=["POST"])
 def edit(review_id):
     new_comment = request.form.get("new_comment")
+    new_comment = new_comment.replace('\n', '<br>')
+    new_rating = request.form.get("new_rating")
     review = Review.query.get(review_id)
-    review.edit_comment(new_comment)
+    review.edit_comment(new_comment, new_rating)
     return redirect(f"/book_page/{review.book_id}")
 
 @app.route("/modify_account")

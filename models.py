@@ -35,6 +35,7 @@ class Review(db.Model):
     def add(self):
         db.session.add(self)
         db.session.commit()
-    def edit_comment(self, new_comment):
+    def edit_comment(self, new_comment, new_rating):
         self.comment = new_comment
+        self.rating = new_rating
         db.session.commit()
