@@ -132,6 +132,7 @@ def edit_page(review_id):
                         JOIN accounts ON review.user_id = accounts.id\
                         WHERE review.book_id = {my_review.book_id};").fetchall()
     book = Books.query.filter_by(id=my_review.book_id).first()
+    print(my_review.comment)
     return render_template("edit.html", book = book, reviews = reviews, count = len(reviews), ratings = get_ratings(book.isbn), user = session['username'], my_review = my_review)
 
 @app.route("/edit/<review_id>", methods=["POST"])
