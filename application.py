@@ -29,7 +29,7 @@ Session(app)
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
-
+# Home page
 @app.route("/")
 def index():
     if 'username' in session:
@@ -60,6 +60,7 @@ def create():
     account.add()
     return redirect("/")
 
+# Check credentials
 @app.route("/verify", methods=["POST"])
 def verify():
     username = request.form.get("username")
@@ -80,6 +81,7 @@ def user():
         found = False
     return render_template("search.html", found = found, username = session['username'])
 
+# Search a book
 @app.route("/search")
 def search():
     way = request.args.get("ways")
@@ -101,6 +103,7 @@ def logout():
     session.pop('username', None)
     return redirect("/")
 
+# Display infomation about the book
 @app.route("/book_page/<id>")
 def book_page(id):
     reviews = db.execute(f"SELECT rating, comment, username, review.id FROM review\
@@ -116,6 +119,7 @@ def book_page(id):
     ratings = get_ratings(book.isbn)
     return render_template("book_page.html", book = book, rate = rate, reviews = reviews, count = count, ratings = ratings, user = session['username'])
 
+# Getting comment that users submit and committing it to database
 @app.route("/add_comment/<book_id>", methods=["POST"])
 def add_comment(book_id):
     comment = request.form.get("comment")
@@ -125,6 +129,7 @@ def add_comment(book_id):
     review.add()
     return redirect(f"/book_page/{book_id}")
 
+# Page for editting
 @app.route("/edit_page/<review_id>")
 def edit_page(review_id):
     my_review = Review.query.filter_by(id=review_id).first()
@@ -135,6 +140,7 @@ def edit_page(review_id):
     print(my_review.comment)
     return render_template("edit.html", book = book, reviews = reviews, count = len(reviews), ratings = get_ratings(book.isbn), user = session['username'], my_review = my_review)
 
+# Update the comment to the database
 @app.route("/edit/<review_id>", methods=["POST"])
 def edit(review_id):
     new_comment = request.form.get("new_comment")

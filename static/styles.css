@@ -1,0 +1,45 @@
+.container {
+    margin-top: 40px;
+}
+
+td a {
+    color: black;
+}
+
+ul li {
+    font-size: 18px;
+    font-weight: bold;
+    font-family: helvetica;
+}
+
+ul li:hover {
+    background-color: lightgray;
+}
+
+.card-text, .card-header {
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: helvetica;
+}
+
+.card-text {
+    font-size: 15px;
+    padding: 10px;
+}
+
+#account {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: helvetica;
+
+}
+
+.info {
+    font-family: georgia;
+    font-weight: bold;
+}
+
+.info tr:hover {
+    background: lightgrey;
+}

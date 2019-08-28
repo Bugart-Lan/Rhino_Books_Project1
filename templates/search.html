@@ -26,8 +26,11 @@
                 </div>
                 <input type="text" class="form-control" placeholder="Please enter keywords..." name="keyword">
             </div>
+            <div class="alert alert-info" style="width:30%; margin-left:13px;">
+                Be mind of uppercase letter.
+            </div>
             {% if not found %}
-            <div class="alert alert-danger container" role="alert">
+            <div class="alert alert-danger container" style="width:50%; margin-left:13px;">
                 Not found! Please select a type and try again!
             </div>
             {% endif %}

@@ -6,32 +6,38 @@
     <center>
         <h1>{{ book.title }}</h1>
         <div class="row container">
-            <div class="col-sm-6">
-                <div class="card">
-                    <ul class="list-group">
-                        <li class="list-group-item">Title</li>
-                        <li class="list-group-item">Author</li>
-                        <li class="list-group-item">Publication year</li>
-                        <li class="list-group-item">ISBN number</li>
-                        <li class="list-group-item">Reviews</li>
-                        <li class="list-group-item">Average rating from Goodreads</li>
-                        <li class="list-group-item">Number of ratings from Goodreads</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="card">
-                    <ul class="list-group">
-                        <li class="list-group-item">{{ book.title }}</li>
-                        <li class="list-group-item">{{ book.author }}</li>
-                        <li class="list-group-item">{{ book.year }}</li>
-                        <li class="list-group-item">{{ book.isbn }}</li>
-                        <li class="list-group-item">{{ count }}</li>
-                        <li class="list-group-item">{{ ratings['av_rating'] }}</li>
-                        <li class="list-group-item">{{ ratings['ratings_cnt'] }}</li>
-                    </ul>
-                </div>
-            </div>
+            <table class="table info">
+                <tbody>
+                    <tr>
+                        <td>Title</td>
+                        <td>{{ book.title }}</td>
+                    </tr>
+                    <tr>
+                        <td>Author</td>
+                        <td>{{ book.author }}</td>
+                    </tr>
+                    <tr>
+                        <td>Publication year</td>
+                        <td>{{ book.year }}</td>
+                    </tr>
+                    <tr>
+                        <td>ISBN number</td>
+                        <td>{{ book.isbn }}</td>
+                    </tr>
+                    <tr>
+                        <td>Reviews</td>
+                        <td>{{ count }}</td>
+                    </tr>
+                    <tr>
+                        <td>Average rating from Goodreads</td>
+                        <td>{{ ratings['av_rating'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Number of ratings from Goodreads</td>
+                        <td>{{ ratings['ratings_cnt'] }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </center>
     <div class="container">
