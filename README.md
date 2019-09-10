@@ -8,4 +8,4 @@ As Mark Twin says, <strong>“Good friends, good books, and a sleepy conscience:
 
 In this project, we used Heroku for database, flask for the server part. We also use Goodreads' API so that you can know how global users rate the books. `template` folder contains all the <strong>html</strong> files and `static` folder contains all the logos, icons, and <strong>css</strong> files. `import.py` imports all the books from <strong>books.csv</strong> file to the database. `application.py` is where all the cool stuffs work.
 
-In order for you to try, download it (and <strong>flask</strong> if you haven't) and open <strong>cmd</strong> type `flask run`, paste the <strong>url</strong> to the blowser, create a account (it's simple and take less than 30 seconds), and have fun!
+In order for you to try, download it (and <strong>flask</strong> if you haven't) and open <strong>cmd</strong> type `flask run`, paste the <strong>url</strong> to the browser, create a account (it's simple and take less than 30 seconds), and have fun!
