@@ -1,6 +1,6 @@
-# Project 1
+# Rhino Books
 
-Web Programming with Python and JavaScript
+Project 1 for Web Programming with Python and JavaScript
 
 Welcome to <strong>Rhino Books!</strong>
 
